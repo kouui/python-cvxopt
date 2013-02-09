@@ -179,5 +179,5 @@ language.''',
     license = 'GNU GPL version 3',
     ext_package = "cvxopt",
     ext_modules = extmods,
-    package_dir = {"cvxopt": "python"},
+    package_dir = {"cvxopt": "src/python"},
     packages = ["cvxopt"])
