@@ -65,7 +65,7 @@ if BUILD_GSL:
         include_dirs = [ GSL_INC_DIR ],
         library_dirs = [ GSL_LIB_DIR, BLAS_LIB_DIR ],
         extra_link_args = BLAS_EXTRA_LINK_ARGS,
-        sources = ['/src/C/gsl.c'] )
+        sources = ['src/C/gsl.c'] )
     extmods += [gsl];
 
 if BUILD_FFTW:
@@ -73,14 +73,14 @@ if BUILD_FFTW:
         include_dirs = [ FFTW_INC_DIR ],
         library_dirs = [ FFTW_LIB_DIR, BLAS_LIB_DIR ],
         extra_link_args = BLAS_EXTRA_LINK_ARGS,
-        sources = ['/src/C/fftw.c'] )
+        sources = ['src/C/fftw.c'] )
     extmods += [fftw];
 
 if BUILD_GLPK:
     glpk = Extension('glpk', libraries = ['glpk'],
         include_dirs = [ GLPK_INC_DIR ],
         library_dirs = [ GLPK_LIB_DIR ],
-        sources = ['/src/C/glpk.c'] )
+        sources = ['src/C/glpk.c'] )
     extmods += [glpk];
 
 if BUILD_DSDP:
@@ -88,7 +88,7 @@ if BUILD_DSDP:
         include_dirs = [ DSDP_INC_DIR ],
         library_dirs = [ DSDP_LIB_DIR, BLAS_LIB_DIR ],
         extra_link_args = BLAS_EXTRA_LINK_ARGS,
-        sources = ['/src/C/dsdp.c'] )
+        sources = ['src/C/dsdp.c'] )
     extmods += [dsdp];
 
 # Required modules
@@ -97,32 +97,32 @@ base = Extension('base', libraries = ['m'] + LAPACK_LIB + BLAS_LIB,
     library_dirs = [ BLAS_LIB_DIR ],
     define_macros = MACROS,
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = ['/src/C/base.c','/src/C/dense.c','/src/C/sparse.c']) 
+    sources = ['src/C/base.c','src/C/dense.c','src/C/sparse.c']) 
 
 blas = Extension('blas', libraries = BLAS_LIB,
     library_dirs = [ BLAS_LIB_DIR ],
     define_macros = MACROS,
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = ['/src/C/blas.c'] )
+    sources = ['src/C/blas.c'] )
 
 lapack = Extension('lapack', libraries = LAPACK_LIB + BLAS_LIB,
     library_dirs = [ BLAS_LIB_DIR ],
     define_macros = MACROS,
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = ['/src/C/lapack.c'] )
+    sources = ['src/C/lapack.c'] )
 
 umfpack = Extension('umfpack', 
-    include_dirs = [ '/src/C/SuiteSparse/UMFPACK/Include',
-        '/src/C/SuiteSparse/AMD/Include', '/src/C/SuiteSparse/AMD/Source', 
-        '/src/C/SuiteSparse/UFconfig' ],
+    include_dirs = [ 'src/C/SuiteSparse/UMFPACK/Include',
+        'src/C/SuiteSparse/AMD/Include', 'src/C/SuiteSparse/AMD/Source', 
+        'src/C/SuiteSparse/UFconfig' ],
     library_dirs = [ BLAS_LIB_DIR ],
     define_macros = MACROS,
     libraries = LAPACK_LIB + BLAS_LIB,
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = [ '/src/C/umfpack.c',
-        '/src/C/SuiteSparse/UMFPACK/Source/umfpack_global.c',
-        '/src/C/SuiteSparse/UMFPACK/Source/umfpack_tictoc.c' ] +
-        glob('/src/C/SuiteSparse_cvxopt_extra/umfpack/*'))
+    sources = [ 'src/C/umfpack.c',
+        'src/C/SuiteSparse/UMFPACK/Source/umfpack_global.c',
+        'src/C/SuiteSparse/UMFPACK/Source/umfpack_tictoc.c' ] +
+        glob('src/C/SuiteSparse_cvxopt_extra/umfpack/*'))
 
 # Build for int or long? 
 import sys
@@ -131,33 +131,33 @@ if sys.maxsize > 2**31: MACROS += [('DLONG','')]
 cholmod = Extension('cholmod',
     library_dirs = [ BLAS_LIB_DIR ],
     libraries = LAPACK_LIB + BLAS_LIB,
-    include_dirs = [ '/src/C/SuiteSparse/CHOLMOD/Include', 
-        '/src/C/SuiteSparse/COLAMD', '/src/C/SuiteSparse/AMD/Include', 
-        '/src/C/SuiteSparse/UFconfig', '/src/C/SuiteSparse/COLAMD/Include' ],
+    include_dirs = [ 'src/C/SuiteSparse/CHOLMOD/Include', 
+        'src/C/SuiteSparse/COLAMD', 'src/C/SuiteSparse/AMD/Include', 
+        'src/C/SuiteSparse/UFconfig', 'src/C/SuiteSparse/COLAMD/Include' ],
     define_macros = MACROS + [('NPARTITION', '1')],
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = [ '/src/C/cholmod.c' ] + 
-        ['/src/C/SuiteSparse/AMD/Source/' + s for s in ['amd_global.c',
+    sources = [ 'src/C/cholmod.c' ] + 
+        ['src/C/SuiteSparse/AMD/Source/' + s for s in ['amd_global.c',
             'amd_postorder.c', 'amd_post_tree.c', 'amd_2.c']] +
-        ['/src/C/SuiteSparse/COLAMD/Source/' + s for s in ['colamd.c',
+        ['src/C/SuiteSparse/COLAMD/Source/' + s for s in ['colamd.c',
             'colamd_global.c']] +
-        glob('/src/C/SuiteSparse/CHOLMOD/Core/c*.c') +
-        glob('/src/C/SuiteSparse/CHOLMOD/Cholesky/c*.c') +
-        ['/src/C/SuiteSparse/CHOLMOD/Check/cholmod_check.c'] +
-        glob('/src/C/SuiteSparse/CHOLMOD/Supernodal/c*.c') )
+        glob('src/C/SuiteSparse/CHOLMOD/Core/c*.c') +
+        glob('src/C/SuiteSparse/CHOLMOD/Cholesky/c*.c') +
+        ['src/C/SuiteSparse/CHOLMOD/Check/cholmod_check.c'] +
+        glob('src/C/SuiteSparse/CHOLMOD/Supernodal/c*.c') )
 
 amd = Extension('amd', 
-    include_dirs = [ '/src/C/SuiteSparse/AMD/Include', 
-        '/src/C/SuiteSparse/UFconfig' ],
+    include_dirs = [ 'src/C/SuiteSparse/AMD/Include', 
+        'src/C/SuiteSparse/UFconfig' ],
     define_macros = MACROS,
-    sources = [ '/src/C/amd.c' ] + glob('/src/C/SuiteSparse/AMD/Source/*.c') )
+    sources = [ 'src/C/amd.c' ] + glob('src/C/SuiteSparse/AMD/Source/*.c') )
 
 misc_solvers = Extension('misc_solvers',
     libraries = LAPACK_LIB + BLAS_LIB,
     library_dirs = [ BLAS_LIB_DIR ],
     define_macros = MACROS,
     extra_link_args = BLAS_EXTRA_LINK_ARGS,
-    sources = ['/src/C/misc_solvers.c'] )
+    sources = ['src/C/misc_solvers.c'] )
 
 extmods += [base, blas, lapack, umfpack, cholmod, amd, misc_solvers] 
 
